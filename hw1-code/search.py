@@ -93,13 +93,19 @@ def calc_manhattan(pos1, pos2):
 def calc_corner(position, Objectives):
     # return 0
     
+    # if(len(Objectives) == 0):
+    #     return 0
+    # result = 0
+    # for i in Objectives:
+    #     result += calc_manhattan(i, position)
+    # return result/len(Objectives)
     if(len(Objectives) == 0):
         return 0
     result = 0
     for i in Objectives:
-        result += calc_manhattan(i, position)
-    return result/len(Objectives)
-
+        result = max(result, calc_manhattan(i, position))
+    return result
+    
 def calc_full(position, Objectives):
     # return 0
     
