@@ -21,6 +21,43 @@ files and classes when code is run, so be careful to not modify anything else.
 
 import copy
 
+def minCostConnectPoints(points):
+    """
+    :type points: List[List[int]]
+    :rtype: int
+    """
+    # standard definition of union find
+    def find(p):
+        while p != roots[p]:
+            p = roots[p]
+        return p
+    def union(p,q):
+        roots[find(p)] = find(q)
+        
+    roots = list(range(len(points)))
+    
+    graph = []
+    for i in range(len(points)):
+        for j in range(i+1,len(points)):
+            dis = abs(points[i][0]-points[j][0]) + abs(points[i][1]-points[j][1])
+            graph.append((i,j,dis))
+    
+    # sort the graph
+    graph.sort(key=lambda x:x[2])
+    cost = 0
+    num_edge = 0
+    for p,q,dis in graph:
+        if num_edge == len(points)-1:
+            break
+        # if p and q is already connected, we skip this edge
+        if find(p)==find(q):
+            continue
+        # if q and q are not connected, we connect them and add to cost
+        union(p,q)
+        cost += dis
+        num_edge += 1
+    return cost
+
 class Node:
     def __init__(self, position, forward_cost, backward_cost, objectives, parent = None):
         self.position = position
@@ -99,12 +136,15 @@ def calc_corner(position, Objectives):
     # for i in Objectives:
     #     result += calc_manhattan(i, position)
     # return result/len(Objectives)
-    if(len(Objectives) == 0):
-        return 0
-    result = 0
-    for i in Objectives:
-        result = max(result, calc_manhattan(i, position))
-    return result
+    
+    # if(len(Objectives) == 0):
+    #     return 0
+    # result = 0
+    # for i in Objectives:
+    #     result = max(result, calc_manhattan(i, position))
+    # return result
+
+    return minCostConnectPoints([position, *Objectives])
     
 def calc_full(position, Objectives):
     # return 0
@@ -123,13 +163,7 @@ def calc_full(position, Objectives):
     #     result = max(result, calc_manhattan(i, position))
     # return result
 
-    if(len(Objectives) == 0):
-        return 0
-    result = 0
-    for i in Objectives:
-        result = max(result, calc_manhattan(i, position))
-    return result
-
+    return minCostConnectPoints([position, *Objectives])
     
 def calc_heuristic(problem, position, Objectives):
     if problem == "base":
@@ -257,7 +291,6 @@ def astar_corner(maze):
             while curr.parent is not curr:
                 curr = curr.parent
                 ans.insert(0, curr.position)
-            print(ans)
             return ans
         
         if frozenset([f"curr: {curr.position}", *curr.objectives]) not in visited:   
@@ -310,7 +343,6 @@ def astar_multi(maze):
             while curr.parent is not curr:
                 curr = curr.parent
                 ans.insert(0, curr.position)
-            print(ans)
             return ans
         
         if frozenset([f"curr: {curr.position}", *curr.objectives]) not in visited:   
