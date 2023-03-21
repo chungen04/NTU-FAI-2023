@@ -205,7 +205,6 @@ def bfs(maze):
             while curr.position is not maze.getStart():
                 curr = curr.parent
                 ans.insert(0, curr.position)
-            print(maze.isValidPath(ans))
             return ans
         
         if(visited.get(curr.position) != curr.objectives):
@@ -246,7 +245,6 @@ def astar(maze):
             while curr.position is not maze.getStart():
                 curr = curr.parent
                 ans.insert(0, curr.position)
-            print(maze.isValidPath(ans))
             return ans
         
         if(visited.get(curr.position) != curr.objectives):
@@ -293,7 +291,6 @@ def astar_corner(maze):
             while curr.parent is not curr:
                 curr = curr.parent
                 ans.insert(0, curr.position)
-            print(maze.isValidPath(ans))
             return ans
         
         if frozenset([f"curr: {curr.position}", *curr.objectives]) not in visited:   
@@ -346,7 +343,6 @@ def astar_multi(maze):
             while curr.parent is not curr:
                 curr = curr.parent
                 ans.insert(0, curr.position)
-            print(maze.isValidPath(ans))
             return ans
         
         if frozenset([f"curr: {curr.position}", *curr.objectives]) not in visited:   
@@ -440,5 +436,4 @@ def fast(maze):
                     path.append(i)
         start = new_pos
         objectives = new_objectives
-    print(maze.isValidPath(path))
     return path
