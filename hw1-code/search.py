@@ -205,6 +205,7 @@ def bfs(maze):
             while curr.position is not maze.getStart():
                 curr = curr.parent
                 ans.insert(0, curr.position)
+            print(maze.isValidPath(ans))
             return ans
         
         if(visited.get(curr.position) != curr.objectives):
@@ -245,6 +246,7 @@ def astar(maze):
             while curr.position is not maze.getStart():
                 curr = curr.parent
                 ans.insert(0, curr.position)
+            print(maze.isValidPath(ans))
             return ans
         
         if(visited.get(curr.position) != curr.objectives):
@@ -291,6 +293,7 @@ def astar_corner(maze):
             while curr.parent is not curr:
                 curr = curr.parent
                 ans.insert(0, curr.position)
+            print(maze.isValidPath(ans))
             return ans
         
         if frozenset([f"curr: {curr.position}", *curr.objectives]) not in visited:   
@@ -343,6 +346,7 @@ def astar_multi(maze):
             while curr.parent is not curr:
                 curr = curr.parent
                 ans.insert(0, curr.position)
+            print(maze.isValidPath(ans))
             return ans
         
         if frozenset([f"curr: {curr.position}", *curr.objectives]) not in visited:   
@@ -361,9 +365,57 @@ def astar_multi(maze):
                     curr
                 )
                 fringe.insert(node)
-            
     return []
 
+def closest_point(start, candidates):
+    least_dist = 99999999
+    for i in candidates:
+        if(calc_manhattan(start, i)<least_dist):
+            least_dist = calc_manhattan(start, i)
+            candidate = i
+    return candidate
+    
+def astar_path(maze, start, objectives):
+    # first calculate target
+    target = closest_point(start, objectives)
+    
+    init = Node(
+        start, 
+        0, 
+        calc_manhattan(start, target), 
+        [target]
+    )
+    init.parent = init
+    
+    fringe = BinaryHeap()
+    visited = {} # saving the visited states
+    fringe.insert(init) # enqueue start node
+    
+    while fringe.current_size != 0:
+        curr = fringe.del_min()
+        
+        if target == curr.position: # goal test
+            ans = []
+            ans.insert(0, curr.position)
+            while curr.position is not start:
+                curr = curr.parent
+                ans.insert(0, curr.position)
+            for point in ans:
+                if point in objectives:
+                    objectives.remove(point)
+            return (ans, target, objectives)
+        
+        if(visited.get(curr.position) != target):
+            visited[curr.position] = target
+            for _, i in enumerate(maze.getNeighbors(*curr.position)): # fringe expansion
+                node = Node(
+                    i, 
+                    curr.forward_cost+1, 
+                    calc_manhattan(i, target),  
+                    [target], 
+                    curr
+                )
+                fringe.insert(node)
 
 def fast(maze):
     """
@@ -373,8 +425,20 @@ def fast(maze):
 
     @return path: a list of tuples containing the coordinates of each state in the computed path
     """
-    # TODO: Write your code here
     # find next state which targets the nearest manhattan distance. eat the food passed by.
+    objectives = maze.getObjectives()
+    start = maze.getStart()
     
-    
-    return []
+    path = []
+    while len(objectives) != 0:
+        new_path, new_pos, new_objectives = astar_path(maze, start, objectives)
+        for idx, i in enumerate(new_path):
+            if(start == maze.getStart()):
+                path.append(i)
+            else:
+                if(idx != 0):
+                    path.append(i)
+        start = new_pos
+        objectives = new_objectives
+    print(maze.isValidPath(path))
+    return path
