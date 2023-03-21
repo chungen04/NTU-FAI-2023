@@ -198,7 +198,7 @@ def bfs(maze):
     visited = {} # saving the visited states
     queue.append(init) # enqueue start node
     while len(queue) != 0:
-        # curr = queue.pop(0)
+        curr = queue.pop(0)
         if maze.getObjectives()[0] == curr.position: # goal test
             ans = []
             ans.insert(0, curr.position)
@@ -374,4 +374,7 @@ def fast(maze):
     @return path: a list of tuples containing the coordinates of each state in the computed path
     """
     # TODO: Write your code here
+    # find next state which targets the nearest manhattan distance. eat the food passed by.
+    
+    
     return []
