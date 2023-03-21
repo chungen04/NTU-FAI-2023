@@ -22,6 +22,7 @@ files and classes when code is run, so be careful to not modify anything else.
 import copy
 
 def minCostConnectPoints(points):
+    # credits: CSDN pages. used as a utility function to calculate MST of a set of points.
     """
     :type points: List[List[int]]
     :rtype: int
@@ -81,6 +82,7 @@ class State:
             self.objectives = objectives
     
 class BinaryHeap:
+    # credits: ChatGPT. used to get a Heap of Node type as a Priority Queue.
     def __init__(self):
         self.heap_list = [Node((0, 0), 0, 0, [], 0)]
         self.current_size = 0
