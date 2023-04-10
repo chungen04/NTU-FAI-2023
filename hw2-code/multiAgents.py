@@ -408,26 +408,26 @@ def betterEvaluationFunction(currentGameState: GameState):
     """
     "*** YOUR CODE HERE ***"
     # util.raiseNotDefined()
-    # return scoreEvaluationFunction(currentGameState)
+    return scoreEvaluationFunction(currentGameState)
 
-    Position = currentGameState.getPacmanPosition()
-    Food = currentGameState.getFood().asList()
-    GhostStates = currentGameState.getGhostStates()
-    ScaredTimes = [ghostState.scaredTimer for ghostState in GhostStates]
+    # Position = currentGameState.getPacmanPosition()
+    # Food = currentGameState.getFood().asList()
+    # GhostStates = currentGameState.getGhostStates()
+    # ScaredTimes = [ghostState.scaredTimer for ghostState in GhostStates]
 
-    score = 0
+    # score = 0
     
-    # haswall is not important
-    nearest_food = min([manhattanDistance(Position, x) for x in Food])
-    nearest_capsule = min([manhattanDistance(Position, x) for x in currentGameState.getCapsules()])
-    nearest_ghost = min([manhattanDistance(Position, x.getPosition()) for x in GhostStates])
+    # # haswall is not important
+    # nearest_food = min([manhattanDistance(Position, x) for x in Food])
+    # nearest_capsule = min([manhattanDistance(Position, x) for x in currentGameState.getCapsules()])
+    # nearest_ghost = min([manhattanDistance(Position, x.getPosition()) for x in GhostStates])
     
-    if(nearest_ghost <= 2):
-        score -= 100
-    else:
-        score = 3.4*nearest_food + 1*nearest_capsule + 1.9*nearest_ghost
+    # if(nearest_ghost <= 2):
+    #     score -= 100
+    # else:
+    #     score = 3.4*nearest_food + 1*nearest_capsule + 1.9*nearest_ghost
     
-    return score
+    # return score
     
 # Abbreviation
 better = betterEvaluationFunction
