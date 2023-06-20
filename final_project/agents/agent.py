@@ -20,24 +20,21 @@ class MCPlayer(
         # print(valid_actions)
         if(round_state['street'] == 'preflop'):
             # 0.4, 0.3, 0.2
-            criteria1 = cfg.preflop_1_prob  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
-            criteria2 = cfg.preflop_2_prob  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
-            criteria3 = cfg.preflop_3_prob  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
+            criteria1 = 0.40 + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
+            criteria2 = 0.30  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
+            criteria3 = 0.20  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
         elif(round_state['street'] == 'flop'):
-            # .45 .3 .05
-            criteria1 = cfg.flop_1_prob  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
-            criteria2 = cfg.flop_2_prob   + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
-            criteria3 = cfg.flop_3_prob   + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
+            criteria1 = 0.45  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
+            criteria2 = 0.30  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
+            criteria3 = 0.05  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
         elif(round_state['street'] == 'turn'):
-            # .55 .45 .05
-            criteria1 = cfg.turn_1_prob   + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
-            criteria2 = cfg.turn_2_prob  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
-            criteria3 = cfg.turn_3_prob  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
+            criteria1 = 0.55  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
+            criteria2 = 0.45  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
+            criteria3 = 0.05  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
         else:
-            # .65 .55 .05
-            criteria1 = cfg.river_1_prob  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
-            criteria2 = cfg.river_2_prob  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
-            criteria3 = cfg.river_3_prob  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
+            criteria1 = 0.65  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
+            criteria2 = 0.55  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
+            criteria3 = 0.05  + (- round_state['round_count'] / 400 if round_state['round_count']>15 else 0)
             
         if(win_ratio[0]>criteria1):
             if(valid_actions[2] is not None):
