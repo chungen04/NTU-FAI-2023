@@ -1,4 +1,4 @@
-from agents.phevaluator import evaluate_cards
+from agents.eval import evaluate_cards
 import random
 
 suits = ['d','s','c','h']
