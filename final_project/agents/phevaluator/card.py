@@ -37,53 +37,6 @@ class Card:
 
             So that you can use `rank * 4 + suit` to get the card ID.
 
-            The complete card Id mapping can be found below. The rows are the ranks from
-            2 to Ace, and the columns are the suits: club, diamond, heart and spade.
-
-            |      |    C |    D |    H |    S |
-            | ---: | ---: | ---: | ---: | ---: |
-            |    2 |    0 |    1 |    2 |    3 |
-            |    3 |    4 |    5 |    6 |    7 |
-            |    4 |    8 |    9 |   10 |   11 |
-            |    5 |   12 |   13 |   14 |   15 |
-            |    6 |   16 |   17 |   18 |   19 |
-            |    7 |   20 |   21 |   22 |   23 |
-            |    8 |   24 |   25 |   26 |   27 |
-            |    9 |   28 |   29 |   30 |   31 |
-            |    T |   32 |   33 |   34 |   35 |
-            |    J |   36 |   37 |   38 |   39 |
-            |    Q |   40 |   41 |   42 |   43 |
-            |    K |   44 |   45 |   46 |   47 |
-            |    A |   48 |   49 |   50 |   51 |
-
-        __slots__ (list[str]): Explicitly declare data members
-
-    Raises:
-        ValueError: Construction with invalid string
-            The string parameter of the constructor should be exactly 2 characters.
-
-            >>> Card("9h")  # OK
-            >>> Card("9h ") # ERROR
-
-        TypeError: Construction with unsupported type
-            The parameter of the constructor should be one of the following types: [int,
-            str, Card].
-            >>> Card(0)       # OK. The 0 stands 2 of Clubs
-            >>> Card("2c")    # OK
-            >>> Card("2C")    # OK. Capital letter is also accepted.
-            >>> Card(Card(0)) # OK
-            >>> Card(0.0)     # ERROR. float is not allowed
-
-        TypeError: Setting attribute
-            >>> c = Card("2c")
-            >>> c.__id = 1      # ERROR
-            >>> c._Card__id = 1 # ERROR
-
-        TypeError: Deliting attribute
-            >>> c = Card("2c")
-            >>> del c.__id      # ERROR
-            >>> del c._Card__id # ERROR
-
     """
 
     __slots__ = ["__id"]
@@ -102,15 +55,6 @@ class Card:
             other (str): The description of the card. e.g. "2c", "Ah"
             other (Card): The other card to copy.
 
-        Examples:
-            Those four variable are same.
-
-            >>> c1 = Card(0)
-            >>> c2 = Card("2c")
-            >>> c3 = Card("2C")
-            >>> c4 = Card(c1)
-            >>> print(c1, c2, c3, c4)
-            Card("2c") Card("2c") Card("2c") Card("2c")
         """
         card_id = Card.to_id(other)
         # Note: use base class assignment because assignment to this class is protected
@@ -167,14 +111,6 @@ class Card:
         Returns:
             str: The card rank
 
-        Examples:
-            >>> c1 = Card("2c")
-            >>> c1.describe_rank()
-            "2"
-
-            >>> c2 = Card("Ah")
-            >>> c2.describe_rank()
-            "A"
         """
         return rank_reverse_map[self.id_ // 4]
 
@@ -184,14 +120,6 @@ class Card:
         Returns:
             str: The suit of the card
 
-        Examples:
-            >>> c1 = Card("2c")
-            >>> c1.describe_suit()
-            "c"
-
-            >>> c2 = Card("2H")
-            >>> c2.describe_suit()
-            "h"
         """
         return suit_reverse_map[self.id_ % 4]
 
@@ -201,14 +129,6 @@ class Card:
         Returns:
             str: The card description.
 
-        Examples:
-            >>> c1 = Card("2c")
-            >>> c1.describe_card()
-            "2c"
-
-            >>> c2 = Card("AH")
-            >>> c2.describe_suit()
-            "Ah"
         """
         return self.describe_rank() + self.describe_suit()
 
@@ -224,18 +144,6 @@ class Card:
         Returns:
             bool: The result of `self == other`
 
-        Examples:
-            >>> Card(0) == Card("2c") == Card("2C")
-            True
-
-            >>> 3 == Card(3) == 3
-            True
-
-            >>> "Ah" == Card("Ah") == "Ah"
-            True
-
-            >>> "AH" == Card("Ah") == "AH"
-            True
         """
         if isinstance(other, int):
             return int(self) == other

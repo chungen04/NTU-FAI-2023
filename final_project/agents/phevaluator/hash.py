@@ -13,17 +13,6 @@ def hash_quinary(quinary: [int], num_cards: int) -> int:
 
     Returns:
         int: hash value
-
-    Examples:
-        The cards `6 5 4 3 2` is expressed as {
-            "quinary": [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-            "num_cards": 5
-        }
-
-        The cards `A A K K Q Q` is expressed as {
-            "quinary": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2],
-            "num_cards": 6
-        }
     """
     sum_numb = 0
     length = len(quinary)
@@ -43,19 +32,6 @@ def hash_binary(binary: int, num_cards: int) -> int:
         binary (int): The binary expressing combination of the cards.
         num_cards (int): The number of the cards.
 
-    Returns:
-        int: hash value
-
-    Examples:
-        The cards `6 5 4 3 2` is expressed as {
-            "binary": 0b11111,
-            "num_cards": 5
-        }
-
-        The cards `A K Q J T 2` is expressed as {
-            "binary": 0b1111100000001,
-            "num_cards": 6
-        }
     """
     sum_numb = 0
     length = 15

@@ -35,12 +35,6 @@ def evaluate_cards(*cards: Union[int, str, Card]) -> int:
     Returns:
         int: The rank of the given cards with the best five cards. Smaller is stronger.
 
-    Examples:
-        >>> rank1 = evaluate_cards("Ac", "Ad", "Ah", "As", "Kc")
-        >>> rank2 = evaluate_cards("Ac", "Ad", "Ah", "As", "Kd")
-        >>> rank3 = evaluate_cards("Ac", "Ad", "Ah", "As", "Kc", "Qh")
-        >>> rank1 == rank2 == rank3 # Those three are evaluated by `A A A A K`
-        True
     """
     int_cards = list(map(Card.to_id, cards))
     hand_size = len(cards)
@@ -50,7 +44,6 @@ def evaluate_cards(*cards: Union[int, str, Card]) -> int:
             f"The number of cards must be between {MIN_CARDS} and {MAX_CARDS}."
             f"passed size: {hand_size}"
         )
-
     return _evaluate_cards(*int_cards)
 
 
